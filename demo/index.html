@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SiftIQ Money Live Demo</title>
     <style>
-      html, body { height: 100%; margin: 0; background: #0a1424; color: #eaf1f8; font-family: "Segoe UI", Arial, sans-serif; }
+      html, body { height: 100%; margin: 0; background: #070b09; color: #f4fff8; font-family: "Segoe UI", Arial, sans-serif; }
       body { display: grid; place-items: center; }
       .loader { display: grid; justify-items: center; gap: 14px; }
-      .loader span { width: 34px; height: 34px; border: 3px solid rgba(148,184,220,.22); border-top-color: #2f8cff; border-radius: 50%; animation: spin .8s linear infinite; }
-      .loader p { margin: 0; color: #8fa1b8; font-size: 13px; }
+      .loader span { width: 34px; height: 34px; border: 3px solid rgba(120,240,173,.2); border-top-color: #23d66f; border-radius: 50%; animation: spin .8s linear infinite; }
+      .loader p { margin: 0; color: #a8b8af; font-size: 13px; }
       @keyframes spin { to { transform: rotate(360deg); } }
     </style>
   </head>
@@ -26,8 +26,23 @@
         const binary = atob(chunks.join(""));
         const bytes = Uint8Array.from(binary, (character) => character.charCodeAt(0));
         let html = new TextDecoder().decode(bytes);
-        const layoutFix = `<style id="demo-layout-fix">html{height:auto}body{height:auto!important;min-height:100vh}.cta-section,.page-foot{flex:0 0 auto!important}</style>`;
-        const backLink = `<a href="../" style="position:fixed;left:18px;top:18px;z-index:99999;display:inline-flex;align-items:center;gap:8px;padding:9px 13px;border-radius:999px;background:rgba(10,20,36,.86);border:1px solid rgba(148,184,220,.28);box-shadow:0 12px 30px rgba(0,0,0,.32);color:#eaf1f8;text-decoration:none;font:600 12.5px/1.2 'Segoe UI',Arial,sans-serif;backdrop-filter:blur(8px)">← Back to SiftIQ Money</a>`;
+        html = html.replace('data-theme="blue"', 'data-theme="dark"');
+        html = html.replaceAll('#2f8cff', '#23d66f').replaceAll('#1f6fd6', '#19a857').replaceAll('rgba(47,140,255', 'rgba(35,214,111');
+        html = html.replace('<option value="blue" selected>Blue</option>', '<option value="blue">Blue</option>');
+        html = html.replace('<option value="dark">Dark</option>', '<option value="dark" selected>Dark</option>');
+        const layoutFix = `<style id="demo-layout-fix">
+          html{height:auto!important;min-height:100%!important;overflow-y:scroll!important;scroll-behavior:smooth}
+          body{height:auto!important;min-height:100vh!important;overflow:visible!important;background:radial-gradient(1100px 650px at 12% -8%,rgba(35,214,111,.12),transparent 60%),linear-gradient(180deg,#050806,#070b09)!important}
+          .demo-banner,.app-window,.cta-section,.page-foot{flex:0 0 auto!important}
+          [data-theme="blue"],[data-theme="dark"]{--bg:#070b09;--bg2:#050806;--panel:#0e1511;--panel2:#111b16;--panel3:#17231c;--border:rgba(140,203,166,.14);--border2:rgba(140,203,166,.24);--text:#f4fff8;--muted:#a8b8af;--muted2:#72857a;--blue:#23d66f;--blue-d:#19a857;--green:#23d66f;--green-d:#1da862;--titlebar:#07110d;--sidebar:#09110d;--input:#0b1410}
+          [data-theme="blue"] body,[data-theme="dark"] body{background:radial-gradient(1100px 650px at 12% -8%,rgba(35,214,111,.12),transparent 60%),linear-gradient(180deg,#050806,#070b09)!important}
+          [data-theme="blue"] .cta-section,[data-theme="dark"] .cta-section{background:linear-gradient(135deg,rgba(14,32,24,.98),rgba(7,15,11,.98))!important}
+          [data-theme="blue"] .cta-section h2 .grad,[data-theme="dark"] .cta-section h2 .grad,[data-theme="blue"] .upg-modal h2 .grad,[data-theme="dark"] .upg-modal h2 .grad{background:linear-gradient(90deg,#78f0ad,#23d66f)!important;-webkit-background-clip:text!important;background-clip:text!important}
+          [data-theme="blue"] .nav-item.active,[data-theme="dark"] .nav-item.active{background:rgba(35,214,111,.14)}
+          [data-theme="blue"] .page-ico,[data-theme="dark"] .page-ico,[data-theme="blue"] .bank-badge,[data-theme="dark"] .bank-badge,[data-theme="blue"] .acc-badge,[data-theme="dark"] .acc-badge{background:rgba(35,214,111,.12)}
+          ::-webkit-scrollbar-thumb{background:rgba(35,214,111,.28)!important}
+        </style>`;
+        const backLink = `<a href="../" style="position:fixed;left:18px;top:18px;z-index:99999;display:inline-flex;align-items:center;gap:8px;padding:9px 13px;border-radius:999px;background:rgba(7,17,13,.9);border:1px solid rgba(120,240,173,.3);box-shadow:0 12px 30px rgba(0,0,0,.32);color:#f4fff8;text-decoration:none;font:600 12.5px/1.2 'Segoe UI',Arial,sans-serif;backdrop-filter:blur(8px)">← Back to SiftIQ Money</a>`;
         html = html.includes("</head>") ? html.replace("</head>", `${layoutFix}</head>`) : `${layoutFix}${html}`;
         html = html.includes("</body>") ? html.replace("</body>", `${backLink}</body>`) : `${html}${backLink}`;
         document.open();
