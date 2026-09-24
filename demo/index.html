@@ -27,6 +27,7 @@
         const bytes = Uint8Array.from(binary, (character) => character.charCodeAt(0));
         let html = new TextDecoder().decode(bytes);
         html = html.replace('data-theme="blue"', 'data-theme="dark"');
+        html = html.replaceAll('#2f8cff', '#23d66f').replaceAll('#1f6fd6', '#19a857').replaceAll('rgba(47,140,255', 'rgba(35,214,111');
         html = html.replace('<option value="blue" selected>Blue</option>', '<option value="blue">Blue</option>');
         html = html.replace('<option value="dark">Dark</option>', '<option value="dark" selected>Dark</option>');
         const layoutFix = `<style id="demo-layout-fix">
